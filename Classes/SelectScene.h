@@ -47,7 +47,9 @@ private:
     void update(float delta);
     
     void createPhysWorld();
-    void createSprite();
+    void createSpriteAt(Point pos);
+    void createSpriteRandom();
+    void createGround();
     
 public:
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);

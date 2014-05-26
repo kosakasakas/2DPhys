@@ -40,8 +40,8 @@ bool SelectScene::init() {
         return false;
     }
     createPhysWorld();
-    createSprite();
-    //schedule( schedule_selector(SelectScene::updateWorld) , 0.01);
+    createSpriteRandom();
+    createGround();
     scheduleUpdate();
     return true;
 }
@@ -51,6 +51,12 @@ void SelectScene::update(float delta){
     int velocityIterations = 8;
     int positionIteretions = 1;
     world->Step(delta, velocityIterations, positionIteretions);
+    
+    // 物体静止時に演算を省略する
+    world->SetAllowSleeping(true);
+    
+    // 貫通しないように連続計算
+    world->SetContinuousPhysics(true);
 }
 
 void SelectScene::createPhysWorld() {
@@ -59,18 +65,18 @@ void SelectScene::createPhysWorld() {
     world = new b2World(gravity);
 }
 
-void SelectScene::createSprite() {
-    Size winSize = Director::getInstance()->getWinSize();
-    
+void SelectScene::createSpriteAt(Point pos) {
     b2Body* body;
     b2BodyDef bodyDef;
     b2CircleShape shape;
     b2FixtureDef fixtureDef;
     
-    PhysicsSprite* physicsSprite = PhysicsSprite::create("clickme.png");
+    PhysicsSprite* physicsSprite = PhysicsSprite::create("circle.png");
+    float scale = Director::getInstance()->getContentScaleFactor();
+    physicsSprite->cocos2d::Node::setScale(scale);
     
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set((winSize.width / 2) / PT_RATIO, (winSize.height) / PT_RATIO);
+    bodyDef.position.Set((pos.x) / PT_RATIO, (pos.y) / PT_RATIO);
     bodyDef.userData = physicsSprite;
     
     body = world->CreateBody(&bodyDef);
@@ -78,13 +84,48 @@ void SelectScene::createSprite() {
     shape.m_radius = physicsSprite->getContentSize().width / PT_RATIO;
     fixtureDef.shape = &shape;
     fixtureDef.density = 1;
-    fixtureDef.friction = 0.9;
+    fixtureDef.friction = 0.3;
     
     body->CreateFixture(&fixtureDef);
     
     this->addChild(physicsSprite);
     physicsSprite->setB2Body(body);
     physicsSprite->setPTMRatio(PT_RATIO);
-    physicsSprite->setPosition(Point(winSize.width / 2, winSize.height / 2));
+    physicsSprite->setPosition(pos);
+}
+
+void SelectScene::createSpriteRandom() {
+    Size winSize = Director::getInstance()->getWinSize();
+    int num = 20;
+    for (int i = 0; i < num; i++) {
+        int idx = CCRANDOM_0_1() * winSize.width;
+        int idy = CCRANDOM_0_1() * winSize.height;
+        createSpriteAt(Point(idx, idy));
+    }
+}
+
+void SelectScene::createGround() {
+    Size winSize = Director::getInstance()->getWinSize();
+    b2BodyDef groundBodyDef;
+    groundBodyDef.position.SetZero();
     
+    b2Body* groundBody = world->CreateBody(&groundBodyDef);
+    
+    b2EdgeShape groundBox;
+    
+    // bottom
+    groundBox.Set(b2Vec2(0,0), b2Vec2(winSize.width/PT_RATIO,0));
+    groundBody->CreateFixture(&groundBox,0);
+    
+    // top
+    groundBox.Set(b2Vec2(0,winSize.height/PT_RATIO), b2Vec2(winSize.width/PT_RATIO,winSize.height/PT_RATIO));
+    groundBody->CreateFixture(&groundBox,0);
+    
+    // left
+    groundBox.Set(b2Vec2(0,winSize.height/PT_RATIO), b2Vec2(0,0));
+    groundBody->CreateFixture(&groundBox,0);
+    
+    // right
+    groundBox.Set(b2Vec2(winSize.width/PT_RATIO,winSize.height/PT_RATIO), b2Vec2(winSize.width/PT_RATIO,0));
+    groundBody->CreateFixture(&groundBox,0);
 }
