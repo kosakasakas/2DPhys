@@ -47,9 +47,9 @@ private:
     void update(float delta);
     
     void createPhysWorld();
-    void createSpriteAt(Point pos);
-    void createSpriteRandom();
     void createGround();
+    
+    void initTouchEventListener();
     
 public:
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
@@ -61,6 +61,14 @@ public:
     
     SelectScene();
     virtual ~SelectScene();
+    
+    void createSpriteAt(Point pos);
+    void createSpriteRandom();
+    
+    bool onTouchBegan(Touch *touch, Event *event);
+    void onTouchEnded(Touch *touch, Event *event);
+    void onTouchMoved(Touch *touch, Event *event);
+    void onTouchCancelled(Touch *touch, Event *event);
     
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(SelectScene, create);
 

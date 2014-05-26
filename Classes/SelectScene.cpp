@@ -39,13 +39,40 @@ bool SelectScene::init() {
     if ( !Layer::init() ) {
         return false;
     }
+    
     createPhysWorld();
-    createSpriteRandom();
     createGround();
+    
+    initTouchEventListener();
+    
     scheduleUpdate();
+    
     return true;
 }
 
+void SelectScene::initTouchEventListener() {
+    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    listener->setSwallowTouches(true);
+    listener->onTouchBegan = CC_CALLBACK_2(SelectScene::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(SelectScene::onTouchMoved, this);
+    listener->onTouchEnded = CC_CALLBACK_2(SelectScene::onTouchEnded, this);
+    listener->onTouchCancelled = CC_CALLBACK_2(SelectScene::onTouchCancelled, this);
+    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 100);
+}
+
+bool SelectScene::onTouchBegan(Touch *touch, Event *event) {
+    return true;
+}
+
+void SelectScene::onTouchEnded(Touch *touch, Event *event) {
+    createSpriteAt(touch->getLocation());
+};
+
+void SelectScene::onTouchMoved(Touch *touch, Event *event) {
+}
+
+void SelectScene::onTouchCancelled(Touch *touch, Event *event) {
+}
 
 void SelectScene::update(float delta){
     int velocityIterations = 8;
@@ -122,10 +149,10 @@ void SelectScene::createGround() {
     groundBody->CreateFixture(&groundBox,0);
     
     // left
-    groundBox.Set(b2Vec2(0,winSize.height/PT_RATIO), b2Vec2(0,0));
-    groundBody->CreateFixture(&groundBox,0);
+    //groundBox.Set(b2Vec2(0,winSize.height/PT_RATIO), b2Vec2(0,0));
+    //groundBody->CreateFixture(&groundBox,0);
     
     // right
-    groundBox.Set(b2Vec2(winSize.width/PT_RATIO,winSize.height/PT_RATIO), b2Vec2(winSize.width/PT_RATIO,0));
-    groundBody->CreateFixture(&groundBox,0);
+    //groundBox.Set(b2Vec2(winSize.width/PT_RATIO,winSize.height/PT_RATIO), b2Vec2(winSize.width/PT_RATIO,0));
+    //groundBody->CreateFixture(&groundBox,0);
 }
