@@ -40,6 +40,8 @@ bool SelectScene::init() {
         return false;
     }
     
+    srand((unsigned) time(NULL));
+    
     createPhysWorld();
     createGround();
     
@@ -65,7 +67,8 @@ bool SelectScene::onTouchBegan(Touch *touch, Event *event) {
 }
 
 void SelectScene::onTouchEnded(Touch *touch, Event *event) {
-    createSpriteAt(touch->getLocation());
+    Box2dSpriteData data = createRandomBox2DSpriteData();
+    this->drawBox2dSpriteAt(data, touch->getLocation());
 };
 
 void SelectScene::onTouchMoved(Touch *touch, Event *event) {
@@ -92,13 +95,17 @@ void SelectScene::createPhysWorld() {
     world = new b2World(gravity);
 }
 
-void SelectScene::createSpriteAt(Point pos) {
+void SelectScene::drawBox2dSpriteAt(SelectScene::Box2dSpriteData data, Point pos) {
+    if (data.file == NULL) {
+        return;
+    }
+    
     b2Body* body;
     b2BodyDef bodyDef;
     b2CircleShape shape;
     b2FixtureDef fixtureDef;
     
-    PhysicsSprite* physicsSprite = PhysicsSprite::create("circle.png");
+    PhysicsSprite* physicsSprite = PhysicsSprite::create(data.file);
     float scale = Director::getInstance()->getContentScaleFactor();
     physicsSprite->cocos2d::Node::setScale(scale);
     
@@ -110,8 +117,8 @@ void SelectScene::createSpriteAt(Point pos) {
     
     shape.m_radius = physicsSprite->getContentSize().width / PT_RATIO;
     fixtureDef.shape = &shape;
-    fixtureDef.density = 1;
-    fixtureDef.friction = 0.3;
+    fixtureDef.density = data.density;
+    fixtureDef.friction = data.friction;
     
     body->CreateFixture(&fixtureDef);
     
@@ -121,14 +128,19 @@ void SelectScene::createSpriteAt(Point pos) {
     physicsSprite->setPosition(pos);
 }
 
-void SelectScene::createSpriteRandom() {
-    Size winSize = Director::getInstance()->getWinSize();
-    int num = 20;
-    for (int i = 0; i < num; i++) {
-        int idx = CCRANDOM_0_1() * winSize.width;
-        int idy = CCRANDOM_0_1() * winSize.height;
-        createSpriteAt(Point(idx, idy));
+SelectScene::Box2dSpriteData SelectScene::createRandomBox2DSpriteData() {
+    SpriteType type;
+    float rnd = CCRANDOM_0_1();
+    if (rnd < 0.02) {
+        type = SpriteType::Heart;
+    } else if (rnd < 0.33) {
+        type = SpriteType::Star;
+    } else if (rnd < 0.66) {
+        type = SpriteType::Circle;
+    } else {
+        type = SpriteType::Box;
     }
+    return createBox2DSpriteData(type);
 }
 
 void SelectScene::createGround() {
@@ -155,4 +167,30 @@ void SelectScene::createGround() {
     // right
     //groundBox.Set(b2Vec2(winSize.width/PT_RATIO,winSize.height/PT_RATIO), b2Vec2(winSize.width/PT_RATIO,0));
     //groundBody->CreateFixture(&groundBox,0);
+}
+
+SelectScene::Box2dSpriteData SelectScene::createBox2DSpriteData(SpriteType type) {
+    Box2dSpriteData sprite;
+    if (type == SpriteType::Circle) {
+        sprite.file = "circle.png";
+        sprite.density = 10.0;
+        sprite.friction = 0.3;
+    } else if (type == SpriteType::Box) {
+        sprite.file = "box.png";
+        sprite.density = 50.0;
+        sprite.friction = 10.0;
+    } else if (type == SpriteType::Star) {
+        sprite.file = "star.png";
+        sprite.density = 0.05;
+        sprite.friction = 0.01;
+    } else if (type == SpriteType::Heart) {
+        sprite.file = "heart.png";
+        sprite.density = 10000.0;
+        sprite.friction = 0.01;
+    } else {
+        sprite.file = NULL;
+        sprite.density = 0;
+        sprite.friction = 0;
+    }
+    return sprite;
 }

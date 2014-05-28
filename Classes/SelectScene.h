@@ -17,53 +17,46 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-#define MAX_BUTTON_NUM 6
-#define MAX_PAGE_NUM 16
-
 class SelectScene : public Layer
 , public CCBSelectorResolver
 {
-// var
 private:
-    enum NodeTag {
-        Header    = 10,
-        Footer     = 11,
-        TitleLabel = 12,
-        ButtonNode    = 20,
-        
-        SelectButton = 0,
-        HatenaButton =1,
+    enum SpriteType {
+        Circle,
+        Box,
+        Star,
+        Heart,
+        SpriteTypeNum,
     };
     
-    enum PageType {
-        SelectRouletteType,
-        SelectMethod,
-        SelectZone,
-        InputMinBet,
-    };
+    typedef struct Box2dSpriteData {
+        const char* file;
+        float density;
+        float friction;
+    } Box2dSpriteData;
     
     b2World *world;
     
     void update(float delta);
-    
     void createPhysWorld();
     void createGround();
-    
     void initTouchEventListener();
+    
+    Box2dSpriteData createBox2DSpriteData(SpriteType type);
+    Box2dSpriteData createRandomBox2DSpriteData();
     
 public:
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
-    virtual Control::Handler onResolveCCBCCControlSelector(Object * pTarget, const char* pSelectorName);
+    virtual Control::Handler onResolveCCBCCControlSelector(Object* pTarget, const char* pSelectorName);
     void tappedSelectButton(Object* pSender, Control::EventType pControlEventType);
     void tappedHatenaButton(Object* pSender, Control::EventType pControlEventType);
-    
-    virtual bool init();
     
     SelectScene();
     virtual ~SelectScene();
     
-    void createSpriteAt(Point pos);
-    void createSpriteRandom();
+    virtual bool init();
+    
+    void drawBox2dSpriteAt(Box2dSpriteData sprite, Point pos);
     
     bool onTouchBegan(Touch *touch, Event *event);
     void onTouchEnded(Touch *touch, Event *event);
