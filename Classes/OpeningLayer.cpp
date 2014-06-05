@@ -9,6 +9,7 @@
 #import "OpeningLayer.h"
 //#import "AudioManager.h"
 #import "SelectScene.h"
+#import "LiquidScene.h"
 
 USING_NS_CC;
 
@@ -57,16 +58,16 @@ void OpeningLayer::tappedStartRealGameButton(Object* pSender, Control::EventType
 void OpeningLayer::startSimulationScene() {
     auto director = Director::getInstance();
     NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
-    //nodeLoaderLibrary->registerNodeLoader("MainMenuLayer", MainMenuLayerLoader::loader());
+    nodeLoaderLibrary->registerNodeLoader("LiquidScene", LiquidSceneLoader::loader());
     CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
-    Node* node = ccbReader->readNodeGraphFromFile("MainScene.ccbi");
-    Scene* scene = Scene::create();
+    Node* node = ccbReader->readNodeGraphFromFile("SelectScene.ccbi");
+    LiquidScene* scene = LiquidScene::create();
     if (node != NULL)
     {
         scene->addChild(node);
     }
     ccbReader->release();
-    director->pushScene(scene);
+    director->pushScene((Scene*)scene);
 }
 
 void OpeningLayer::startRealGameScene() {
