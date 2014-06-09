@@ -6,8 +6,8 @@
 //
 //
 
-#include "RigidScene.h"
 #import "RigidScene.h"
+#import "OpeningLayer.h"
 
 RigidScene::RigidScene()
 {
@@ -27,11 +27,7 @@ SEL_MenuHandler RigidScene::onResolveCCBCCMenuItemSelector(cocos2d::Object *pTar
 Control::Handler RigidScene::onResolveCCBCCControlSelector(cocos2d::Object *pTarget, const char *pSelectorName)
 {
     CCLOG("name_control = %s", pSelectorName);
-    /*
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedPreviousButton", RigidScene::tappedPreviousButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedNextButton", RigidScene::tappedNextButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedBackButton", RigidScene::tappedBackButton);
-     */
     return NULL;
 }
 
@@ -119,6 +115,7 @@ void RigidScene::drawBox2dSpriteAt(RigidScene::Box2dSpriteData data, Point pos) 
     fixtureDef.shape = &shape;
     fixtureDef.density = data.density;
     fixtureDef.friction = data.friction;
+    fixtureDef.restitution = 0.6;
     
     body->CreateFixture(&fixtureDef);
     
@@ -193,4 +190,25 @@ RigidScene::Box2dSpriteData RigidScene::createBox2DSpriteData(SpriteType type) {
         sprite.friction = 0;
     }
     return sprite;
+}
+
+void RigidScene::tappedPreviousButton(Object* pSender, Control::EventType pControlEventType)
+{
+    CCLOG("tappedPreviousButton eventType = %d", pControlEventType);
+    NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
+    nodeLoaderLibrary->registerNodeLoader("OpeningLayer", OpeningLayerLoader::loader());
+    CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
+    Node* node = ccbReader->readNodeGraphFromFile("Opening.ccbi");
+    Scene* scene = Scene::create();
+    if (node != NULL)
+    {
+        scene->addChild(node);
+    }
+    ccbReader->release();
+    Director::getInstance()->replaceScene(scene);
+}
+
+void RigidScene::onExit() {
+    EventDispatcher::getInstance()->removeAllListeners();
+    Layer::onExit();
 }

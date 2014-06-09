@@ -63,17 +63,9 @@ private:
     void longPressedScheduler(float delta);
     void switchLiquidParam();
     
-public:
-    virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
-    virtual Control::Handler onResolveCCBCCControlSelector(Object* pTarget, const char* pSelectorName);
-    void tappedSelectButton(Object* pSender, Control::EventType pControlEventType);
-    void tappedHatenaButton(Object* pSender, Control::EventType pControlEventType);
-    
-    LiquidScene();
-    virtual ~LiquidScene();
-    
     virtual bool init();
     virtual void draw();
+    virtual void onExit();
     
     void drawBox2dSpriteAt(Box2dSpriteData spriteData, Point pos);
     void drawParticleAt(Point pos);
@@ -83,6 +75,15 @@ public:
     void onTouchEnded(Touch *touch, Event *event);
     void onTouchMoved(Touch *touch, Event *event);
     void onTouchCancelled(Touch *touch, Event *event);
+    
+    void tappedPreviousButton(Object* pSender, Control::EventType pControlEventType);
+    
+public:
+    virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
+    virtual Control::Handler onResolveCCBCCControlSelector(Object* pTarget, const char* pSelectorName);
+    
+    LiquidScene();
+    virtual ~LiquidScene();
     
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(LiquidScene, create);
 

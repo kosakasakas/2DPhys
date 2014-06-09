@@ -1,5 +1,4 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
 #include "AppMacros.h"
 #include "OpeningLayer.h"
 
@@ -19,7 +18,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto eglView = EGLView::getInstance();
     
-
     director->setOpenGLView(eglView);
 	
     // turn on display FPS

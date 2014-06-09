@@ -70,7 +70,7 @@
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string></string>
+		<string>LiquidScene</string>
 		<key>displayName</key>
 		<string>CCLayer</string>
 		<key>memberVarAssignmentName</key>
@@ -144,6 +144,8 @@
 				<true/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

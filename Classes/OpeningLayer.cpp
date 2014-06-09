@@ -63,14 +63,14 @@ void OpeningLayer::startLiquidPhysScene() {
     NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
     nodeLoaderLibrary->registerNodeLoader("LiquidScene", LiquidSceneLoader::loader());
     CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
-    Node* node = ccbReader->readNodeGraphFromFile("GameViewScene.ccbi");
-    LiquidScene* scene = LiquidScene::create();
+    Node* node = ccbReader->readNodeGraphFromFile("LiquidScene.ccbi");
+    Scene* scene = Scene::create();
     if (node != NULL)
     {
         scene->addChild(node);
     }
     ccbReader->release();
-    director->pushScene((Scene*)scene);
+    director->replaceScene(scene);
 }
 
 void OpeningLayer::startRigidPhysScene() {
@@ -78,12 +78,12 @@ void OpeningLayer::startRigidPhysScene() {
     NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
     nodeLoaderLibrary->registerNodeLoader("RigidScene", RigidSceneLoader::loader());
     CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
-    Node* node = ccbReader->readNodeGraphFromFile("GameViewScene.ccbi");
-    RigidScene* scene = RigidScene::create();
+    Node* node = ccbReader->readNodeGraphFromFile("RigidScene.ccbi");
+    Scene* scene = Scene::create();
     if (node != NULL)
     {
         scene->addChild(node);
     }
     ccbReader->release();
-    director->pushScene((Scene*)scene);
+    director->replaceScene(scene);
 }

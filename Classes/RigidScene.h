@@ -45,16 +45,10 @@ private:
     Box2dSpriteData createBox2DSpriteData(SpriteType type);
     Box2dSpriteData createRandomBox2DSpriteData();
     
-public:
-    virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
-    virtual Control::Handler onResolveCCBCCControlSelector(Object* pTarget, const char* pSelectorName);
-    void tappedSelectButton(Object* pSender, Control::EventType pControlEventType);
-    void tappedHatenaButton(Object* pSender, Control::EventType pControlEventType);
-    
-    RigidScene();
-    virtual ~RigidScene();
+    void tappedPreviousButton(Object* pSender, Control::EventType pControlEventType);
     
     virtual bool init();
+    virtual void onExit();
     
     void drawBox2dSpriteAt(Box2dSpriteData sprite, Point pos);
     
@@ -62,6 +56,13 @@ public:
     void onTouchEnded(Touch *touch, Event *event);
     void onTouchMoved(Touch *touch, Event *event);
     void onTouchCancelled(Touch *touch, Event *event);
+    
+public:
+    virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
+    virtual Control::Handler onResolveCCBCCControlSelector(Object* pTarget, const char* pSelectorName);
+    
+    RigidScene();
+    virtual ~RigidScene();
     
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(RigidScene, create);
 

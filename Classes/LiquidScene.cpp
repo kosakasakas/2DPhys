@@ -6,7 +6,8 @@
 //
 //
 
-#include "LiquidScene.h"
+#import "LiquidScene.h"
+#import "OpeningLayer.h"
 
 LiquidScene::LiquidScene()
 : world(NULL)
@@ -36,11 +37,7 @@ SEL_MenuHandler LiquidScene::onResolveCCBCCMenuItemSelector(cocos2d::Object *pTa
 Control::Handler LiquidScene::onResolveCCBCCControlSelector(cocos2d::Object *pTarget, const char *pSelectorName)
 {
     CCLOG("name_control = %s", pSelectorName);
-    /*
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedPreviousButton", LiquidScene::tappedPreviousButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedNextButton", LiquidScene::tappedNextButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedBackButton", LiquidScene::tappedBackButton);
-     */
     return NULL;
 }
 
@@ -119,6 +116,22 @@ void LiquidScene::update(float delta){
     
     // 表示されなくなったパーティクルは消去
     DestroyUndergroundParticle();
+}
+
+void LiquidScene::tappedPreviousButton(Object* pSender, Control::EventType pControlEventType)
+{
+    CCLOG("tappedPreviousButton eventType = %d", pControlEventType);
+    NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
+    nodeLoaderLibrary->registerNodeLoader("OpeningLayer", OpeningLayerLoader::loader());
+    CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
+    Node* node = ccbReader->readNodeGraphFromFile("Opening.ccbi");
+    Scene* scene = Scene::create();
+    if (node != NULL)
+    {
+        scene->addChild(node);
+    }
+    ccbReader->release();
+    Director::getInstance()->replaceScene(scene);
 }
 
 void LiquidScene::longPressedScheduler(float delta) {
@@ -291,23 +304,9 @@ void LiquidScene::drawParticleGroupAt(Box2dSpriteData spriteData, Point pos) {
     b2ParticleGroupDef groupDef;
     groupDef.shape = &ballShape;
     groupDef.flags = (currentLiquidParam == LiquidScene::Elastic) ? b2_elasticParticle : b2_waterParticle;
-    //groupDef.flags = b2_waterParticle;
     groupDef.color.Set(particleColor.r, particleColor.g, particleColor.b, particleColor.a);
     groupDef.position.Set(pos.x/PT_RATIO, pos.y/PT_RATIO);
     particleSystem->CreateParticleGroup(groupDef);
-
-    // Spriteは以下の感じで作る
-    /*for (size_t i = 0; i < group->GetParticleCount(); ++i) {
-        SKShapeNode* node = SKShapeNode.alloc.init;
-        node.path = ovalPath2.CGPath;
-        node.fillColor = UIColor.blueColor;
-        node.lineWidth = 0;
-        node.position = pos;
-        [self addChild:node];
-        
-        // TODO: SKNodeをuserdataに紐付ける
-    }*/
-    
 }
 
 void LiquidScene::DestroyUndergroundParticle() {
@@ -331,4 +330,9 @@ void LiquidScene::switchLiquidParam() {
     }
     std::string str = "パラメータを" + nextParam + "に変更します。";
     MessageBox(str.c_str(), "OK");
+}
+
+void LiquidScene::onExit() {
+    EventDispatcher::getInstance()->removeAllListeners();
+    Layer::onExit();
 }
