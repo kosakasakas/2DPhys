@@ -20,8 +20,13 @@ class OpeningLayer : public Layer
 {
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
     virtual Control::Handler onResolveCCBCCControlSelector(Object * pTarget, const char* pSelectorName);
-    void tappedStartSimulationButton(Object* pSender, Control::EventType pControlEventType);
-    void tappedStartRealGameButton(Object* pSender, Control::EventType pControlEventType);
+    void tappedStartRigidPhysButton(Object* pSender, Control::EventType pControlEventType);
+    void tappedStartLiquidPhysButton(Object* pSender, Control::EventType pControlEventType);
+    void tappedStartSampleGameButton(Object* pSender, Control::EventType pControlEventType);
+    
+    void startRigidPhysScene();
+    void startLiquidPhysScene();
+    void startSampleGameScene();
     
 public:
     OpeningLayer();
@@ -29,9 +34,6 @@ public:
     virtual void onEnter();
     
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(OpeningLayer, create);
-    
-    void startSimulationScene();
-    void startRealGameScene();
 };
 
 class OpeningLayerLoader : public cocos2d::extension::LayerLoader

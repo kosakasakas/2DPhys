@@ -1,13 +1,13 @@
 //
-//  SelectScene.h
+//  RigidScene.h
 //  Casidra
 //
 //  Created by Takahiro Kosaka on 2014/01/04.
 //
 //
 
-#ifndef __Casidra__SelectScene__
-#define __Casidra__SelectScene__
+#ifndef __Casidra__RigidScene__
+#define __Casidra__RigidScene__
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
@@ -17,7 +17,7 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-class SelectScene : public Layer
+class RigidScene : public Layer
 , public CCBSelectorResolver
 {
 private:
@@ -51,8 +51,8 @@ public:
     void tappedSelectButton(Object* pSender, Control::EventType pControlEventType);
     void tappedHatenaButton(Object* pSender, Control::EventType pControlEventType);
     
-    SelectScene();
-    virtual ~SelectScene();
+    RigidScene();
+    virtual ~RigidScene();
     
     virtual bool init();
     
@@ -63,18 +63,18 @@ public:
     void onTouchMoved(Touch *touch, Event *event);
     void onTouchCancelled(Touch *touch, Event *event);
     
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(SelectScene, create);
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(RigidScene, create);
 
 };
 
-class SelectSceneLoader : public cocos2d::extension::LayerLoader
+class RigidSceneLoader : public cocos2d::extension::LayerLoader
 {
 public:
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(SelectSceneLoader, loader);
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(RigidSceneLoader, loader);
     
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(SelectScene);
+    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(RigidScene);
 };
 
 
-#endif /* defined(__Casidra__SelectScene__) */
+#endif /* defined(__Casidra__RigidScene__) */

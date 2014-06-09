@@ -7,8 +7,7 @@
 //
 
 #import "OpeningLayer.h"
-//#import "AudioManager.h"
-#import "SelectScene.h"
+#import "RigidScene.h"
 #import "LiquidScene.h"
 
 USING_NS_CC;
@@ -30,37 +29,41 @@ SEL_MenuHandler OpeningLayer::onResolveCCBCCMenuItemSelector(cocos2d::Object *pT
 
 Control::Handler OpeningLayer::onResolveCCBCCControlSelector(cocos2d::Object *pTarget, const char *pSelectorName)
 {
-     CCLOG("name_control = %s", pSelectorName);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedStartSimulationButton", OpeningLayer::tappedStartSimulationButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedStartRealGameButton", OpeningLayer::tappedStartRealGameButton);
+    CCLOG("name_control = %s", pSelectorName);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedStartRigidPhysButton", OpeningLayer::tappedStartRigidPhysButton);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedStartLiquidPhysButton", OpeningLayer::tappedStartLiquidPhysButton);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedStartSampleGameButton", OpeningLayer::tappedStartSampleGameButton);
     
     return NULL;
 }
 
 void OpeningLayer::onEnter() {
     Layer::onEnter();
-    //AudioManager::playBackGroundMusic(AudioManager::startBgmFile);
 }
 
-void OpeningLayer::tappedStartSimulationButton(Object* pSender, Control::EventType pControlEventType)
+void OpeningLayer::tappedStartRigidPhysButton(Object* pSender, Control::EventType pControlEventType)
 {
     CCLOG("tappedStartSimulationButton eventType = %d", pControlEventType);
-    //AudioManager::playTapEffect();
-    startSimulationScene();
+    startRigidPhysScene();
 }
 
-void OpeningLayer::tappedStartRealGameButton(Object* pSender, Control::EventType pControlEventType)
+void OpeningLayer::tappedStartLiquidPhysButton(Object* pSender, Control::EventType pControlEventType)
 {
     CCLOG("tappedRealGameButton eventType = %d", pControlEventType);
-    startRealGameScene();
+    startLiquidPhysScene();
 }
 
-void OpeningLayer::startSimulationScene() {
+void OpeningLayer::tappedStartSampleGameButton(Object* pSender, Control::EventType pControlEventType)
+{
+    CCLOG("tappedRealGameButton eventType = %d", pControlEventType);
+}
+
+void OpeningLayer::startLiquidPhysScene() {
     auto director = Director::getInstance();
     NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
     nodeLoaderLibrary->registerNodeLoader("LiquidScene", LiquidSceneLoader::loader());
     CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
-    Node* node = ccbReader->readNodeGraphFromFile("SelectScene.ccbi");
+    Node* node = ccbReader->readNodeGraphFromFile("GameViewScene.ccbi");
     LiquidScene* scene = LiquidScene::create();
     if (node != NULL)
     {
@@ -70,13 +73,13 @@ void OpeningLayer::startSimulationScene() {
     director->pushScene((Scene*)scene);
 }
 
-void OpeningLayer::startRealGameScene() {
+void OpeningLayer::startRigidPhysScene() {
     auto director = Director::getInstance();
     NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
-    nodeLoaderLibrary->registerNodeLoader("SelectScene", SelectSceneLoader::loader());
+    nodeLoaderLibrary->registerNodeLoader("RigidScene", RigidSceneLoader::loader());
     CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
-    Node* node = ccbReader->readNodeGraphFromFile("SelectScene.ccbi");
-    SelectScene* scene = SelectScene::create();
+    Node* node = ccbReader->readNodeGraphFromFile("GameViewScene.ccbi");
+    RigidScene* scene = RigidScene::create();
     if (node != NULL)
     {
         scene->addChild(node);

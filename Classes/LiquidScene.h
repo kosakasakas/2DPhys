@@ -30,6 +30,12 @@ private:
         SpriteTypeNum,
     };
     
+    enum LiquidParam {
+        Water,
+        Elastic,
+        LiquidParamNum
+    };
+    
     typedef struct Box2dSpriteData {
         const char* file;
         float density;
@@ -40,6 +46,7 @@ private:
     GLESDebugDraw *debugDraw;
     b2ParticleSystem *particleSystem;
     b2ParticleColor particleColor;
+    LiquidParam currentLiquidParam;
     
     void update(float delta);
     void createPhysWorld();
@@ -52,6 +59,9 @@ private:
     Box2dSpriteData createRandomBox2DSpriteData();
     
     void DestroyUndergroundParticle();
+    
+    void longPressedScheduler(float delta);
+    void switchLiquidParam();
     
 public:
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);

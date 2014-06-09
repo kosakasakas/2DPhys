@@ -12,6 +12,7 @@ LiquidScene::LiquidScene()
 : world(NULL)
 , debugDraw(NULL)
 , particleSystem(NULL)
+, currentLiquidParam(Water)
 {
 }
 
@@ -88,11 +89,13 @@ void LiquidScene::initTouchEventListener() {
 }
 
 bool LiquidScene::onTouchBegan(Touch *touch, Event *event) {
+    scheduleOnce(schedule_selector(LiquidScene::longPressedScheduler), 1.0);
     particleColor.Set(arc4random()%255, arc4random()%255, arc4random()%255, 255);
     return true;
 }
 
 void LiquidScene::onTouchEnded(Touch *touch, Event *event) {
+    unschedule(schedule_selector(LiquidScene::longPressedScheduler));
     Box2dSpriteData data = createRandomBox2DSpriteData();
     drawParticleGroupAt(data, touch->getLocation());
 };
@@ -116,6 +119,10 @@ void LiquidScene::update(float delta){
     
     // 表示されなくなったパーティクルは消去
     DestroyUndergroundParticle();
+}
+
+void LiquidScene::longPressedScheduler(float delta) {
+    switchLiquidParam();
 }
 
 void LiquidScene::createPhysWorld() {
@@ -283,8 +290,8 @@ void LiquidScene::drawParticleGroupAt(Box2dSpriteData spriteData, Point pos) {
     
     b2ParticleGroupDef groupDef;
     groupDef.shape = &ballShape;
-    groupDef.flags = b2_waterParticle;
-    //groupDef.flags = b2_elasticParticle;
+    groupDef.flags = (currentLiquidParam == LiquidScene::Elastic) ? b2_elasticParticle : b2_waterParticle;
+    //groupDef.flags = b2_waterParticle;
     groupDef.color.Set(particleColor.r, particleColor.g, particleColor.b, particleColor.a);
     groupDef.position.Set(pos.x/PT_RATIO, pos.y/PT_RATIO);
     particleSystem->CreateParticleGroup(groupDef);
@@ -311,4 +318,17 @@ void LiquidScene::DestroyUndergroundParticle() {
             particleSystem->DestroyParticle(i);
         }
     }
+}
+
+void LiquidScene::switchLiquidParam() {
+    std::string nextParam = "";
+    if (currentLiquidParam == LiquidScene::Water) {
+        nextParam = "弾性体";
+        currentLiquidParam = LiquidScene::Elastic;
+    } else if (currentLiquidParam == LiquidScene::Elastic) {
+        nextParam = "水";
+        currentLiquidParam = LiquidScene::Water;
+    }
+    std::string str = "パラメータを" + nextParam + "に変更します。";
+    MessageBox(str.c_str(), "OK");
 }

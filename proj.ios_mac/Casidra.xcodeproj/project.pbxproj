@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		145D320F1907B8130067B357 /* BetMethodModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D32051907B8130067B357 /* BetMethodModel.cpp */; };
 		145D32101907B8130067B357 /* OpeningLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D32071907B8130067B357 /* OpeningLayer.cpp */; };
-		145D32121907B8130067B357 /* SelectScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D320C1907B8130067B357 /* SelectScene.cpp */; };
+		145D32121907B8130067B357 /* RigidScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D320C1907B8130067B357 /* RigidScene.cpp */; };
 		145D32261907B8270067B357 /* ccbResources in Resources */ = {isa = PBXBuildFile; fileRef = 145D32191907B8270067B357 /* ccbResources */; };
 		145D32271907B8270067B357 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 145D321A1907B8270067B357 /* fileLookup.plist */; };
 		145D32281907B8270067B357 /* Footer.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 145D321B1907B8270067B357 /* Footer.ccbi */; };
@@ -21,8 +21,8 @@
 		145D322E1907B8270067B357 /* Opening.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 145D32211907B8270067B357 /* Opening.ccbi */; };
 		145D322F1907B8270067B357 /* resources-iphone in Resources */ = {isa = PBXBuildFile; fileRef = 145D32221907B8270067B357 /* resources-iphone */; };
 		145D32301907B8270067B357 /* resources-iphonehd in Resources */ = {isa = PBXBuildFile; fileRef = 145D32231907B8270067B357 /* resources-iphonehd */; };
-		145D32311907B8270067B357 /* SelectScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 145D32241907B8270067B357 /* SelectScene.ccbi */; };
 		145D32321907B8270067B357 /* SelectZoneScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 145D32251907B8270067B357 /* SelectZoneScene.ccbi */; };
+		14998D721945A2D20062FF0A /* GameViewScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 14998D711945A2D20062FF0A /* GameViewScene.ccbi */; };
 		14DADDDE193F27AB0026DEE0 /* GLES-Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14DADDDB193F27AB0026DEE0 /* GLES-Render.cpp */; };
 		14DADDE8193F2B120026DEE0 /* LiquidScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14DADDE7193F2B120026DEE0 /* LiquidScene.cpp */; };
 		1ACB3244164770DE00914215 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACB3243164770DE00914215 /* libcurl.a */; };
@@ -261,8 +261,8 @@
 		145D32071907B8130067B357 /* OpeningLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpeningLayer.cpp; path = ../Classes/OpeningLayer.cpp; sourceTree = "<group>"; };
 		145D32081907B8130067B357 /* OpeningLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpeningLayer.h; path = ../Classes/OpeningLayer.h; sourceTree = "<group>"; };
 		145D32091907B8130067B357 /* RouletteConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouletteConfig.h; path = ../Classes/RouletteConfig.h; sourceTree = "<group>"; };
-		145D320C1907B8130067B357 /* SelectScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SelectScene.cpp; path = ../Classes/SelectScene.cpp; sourceTree = "<group>"; };
-		145D320D1907B8130067B357 /* SelectScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectScene.h; path = ../Classes/SelectScene.h; sourceTree = "<group>"; };
+		145D320C1907B8130067B357 /* RigidScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RigidScene.cpp; path = ../Classes/RigidScene.cpp; sourceTree = "<group>"; };
+		145D320D1907B8130067B357 /* RigidScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RigidScene.h; path = ../Classes/RigidScene.h; sourceTree = "<group>"; };
 		145D320E1907B8130067B357 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Text.h; path = ../Classes/Text.h; sourceTree = "<group>"; };
 		145D32191907B8270067B357 /* ccbResources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccbResources; sourceTree = "<group>"; };
 		145D321A1907B8270067B357 /* fileLookup.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = fileLookup.plist; sourceTree = "<group>"; };
@@ -275,8 +275,8 @@
 		145D32211907B8270067B357 /* Opening.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Opening.ccbi; sourceTree = "<group>"; };
 		145D32221907B8270067B357 /* resources-iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-iphone"; sourceTree = "<group>"; };
 		145D32231907B8270067B357 /* resources-iphonehd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-iphonehd"; sourceTree = "<group>"; };
-		145D32241907B8270067B357 /* SelectScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = SelectScene.ccbi; sourceTree = "<group>"; };
 		145D32251907B8270067B357 /* SelectZoneScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = SelectZoneScene.ccbi; sourceTree = "<group>"; };
+		14998D711945A2D20062FF0A /* GameViewScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = GameViewScene.ccbi; sourceTree = "<group>"; };
 		14DADDDA193F27AB0026DEE0 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GLES-Render.h"; path = "../Classes/GLES-Render.h"; sourceTree = "<group>"; };
 		14DADDDB193F27AB0026DEE0 /* GLES-Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "GLES-Render.cpp"; path = "../Classes/GLES-Render.cpp"; sourceTree = "<group>"; };
 		14DADDE6193F2B120026DEE0 /* LiquidScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiquidScene.h; path = ../Classes/LiquidScene.h; sourceTree = "<group>"; };
@@ -408,8 +408,8 @@
 				145D32071907B8130067B357 /* OpeningLayer.cpp */,
 				145D32081907B8130067B357 /* OpeningLayer.h */,
 				145D32091907B8130067B357 /* RouletteConfig.h */,
-				145D320C1907B8130067B357 /* SelectScene.cpp */,
-				145D320D1907B8130067B357 /* SelectScene.h */,
+				145D320C1907B8130067B357 /* RigidScene.cpp */,
+				145D320D1907B8130067B357 /* RigidScene.h */,
 				145D320E1907B8130067B357 /* Text.h */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
@@ -533,6 +533,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				14998D711945A2D20062FF0A /* GameViewScene.ccbi */,
 				145D32191907B8270067B357 /* ccbResources */,
 				145D321A1907B8270067B357 /* fileLookup.plist */,
 				145D321B1907B8270067B357 /* Footer.ccbi */,
@@ -544,7 +545,6 @@
 				145D32211907B8270067B357 /* Opening.ccbi */,
 				145D32221907B8270067B357 /* resources-iphone */,
 				145D32231907B8270067B357 /* resources-iphonehd */,
-				145D32241907B8270067B357 /* SelectScene.ccbi */,
 				145D32251907B8270067B357 /* SelectZoneScene.ccbi */,
 			);
 			name = Resources;
@@ -750,11 +750,11 @@
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				145D322F1907B8270067B357 /* resources-iphone in Resources */,
 				145D322B1907B8270067B357 /* InputResultScene.ccbi in Resources */,
-				145D32311907B8270067B357 /* SelectScene.ccbi in Resources */,
 				145D32301907B8270067B357 /* resources-iphonehd in Resources */,
 				145D322A1907B8270067B357 /* InputBetScene.ccbi in Resources */,
 				145D32291907B8270067B357 /* Header.ccbi in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
+				14998D721945A2D20062FF0A /* GameViewScene.ccbi in Resources */,
 				145D32271907B8270067B357 /* fileLookup.plist in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				145D322E1907B8270067B357 /* Opening.ccbi in Resources */,
@@ -792,7 +792,7 @@
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				145D322D1907B8270067B357 /* MainScene.js in Sources */,
-				145D32121907B8130067B357 /* SelectScene.cpp in Sources */,
+				145D32121907B8130067B357 /* RigidScene.cpp in Sources */,
 				145D32101907B8130067B357 /* OpeningLayer.cpp in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
 			);

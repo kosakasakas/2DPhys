@@ -1,41 +1,41 @@
 //
-//  SelectScene.cpp
+//  RigidScene.cpp
 //  Casidra
 //
 //  Created by Takahiro Kosaka on 2014/01/04.
 //
 //
 
-#include "SelectScene.h"
-#import "SelectScene.h"
+#include "RigidScene.h"
+#import "RigidScene.h"
 
-SelectScene::SelectScene()
+RigidScene::RigidScene()
 {
 }
 
-SelectScene::~SelectScene()
+RigidScene::~RigidScene()
 {
 }
 
-SEL_MenuHandler SelectScene::onResolveCCBCCMenuItemSelector(cocos2d::Object *pTarget, const char *pSelectorName)
+SEL_MenuHandler RigidScene::onResolveCCBCCMenuItemSelector(cocos2d::Object *pTarget, const char *pSelectorName)
 {
     CCLOGERROR("name_menu_item = %s", pSelectorName);
     
     return NULL;
 }
 
-Control::Handler SelectScene::onResolveCCBCCControlSelector(cocos2d::Object *pTarget, const char *pSelectorName)
+Control::Handler RigidScene::onResolveCCBCCControlSelector(cocos2d::Object *pTarget, const char *pSelectorName)
 {
     CCLOG("name_control = %s", pSelectorName);
     /*
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedPreviousButton", SelectScene::tappedPreviousButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedNextButton", SelectScene::tappedNextButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedBackButton", SelectScene::tappedBackButton);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedPreviousButton", RigidScene::tappedPreviousButton);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedNextButton", RigidScene::tappedNextButton);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedBackButton", RigidScene::tappedBackButton);
      */
     return NULL;
 }
 
-bool SelectScene::init() {
+bool RigidScene::init() {
     if ( !Layer::init() ) {
         return false;
     }
@@ -52,32 +52,32 @@ bool SelectScene::init() {
     return true;
 }
 
-void SelectScene::initTouchEventListener() {
+void RigidScene::initTouchEventListener() {
     auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
     listener->setSwallowTouches(true);
-    listener->onTouchBegan = CC_CALLBACK_2(SelectScene::onTouchBegan, this);
-    listener->onTouchMoved = CC_CALLBACK_2(SelectScene::onTouchMoved, this);
-    listener->onTouchEnded = CC_CALLBACK_2(SelectScene::onTouchEnded, this);
-    listener->onTouchCancelled = CC_CALLBACK_2(SelectScene::onTouchCancelled, this);
+    listener->onTouchBegan = CC_CALLBACK_2(RigidScene::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(RigidScene::onTouchMoved, this);
+    listener->onTouchEnded = CC_CALLBACK_2(RigidScene::onTouchEnded, this);
+    listener->onTouchCancelled = CC_CALLBACK_2(RigidScene::onTouchCancelled, this);
     EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 100);
 }
 
-bool SelectScene::onTouchBegan(Touch *touch, Event *event) {
+bool RigidScene::onTouchBegan(Touch *touch, Event *event) {
     return true;
 }
 
-void SelectScene::onTouchEnded(Touch *touch, Event *event) {
+void RigidScene::onTouchEnded(Touch *touch, Event *event) {
     Box2dSpriteData data = createRandomBox2DSpriteData();
     this->drawBox2dSpriteAt(data, touch->getLocation());
 };
 
-void SelectScene::onTouchMoved(Touch *touch, Event *event) {
+void RigidScene::onTouchMoved(Touch *touch, Event *event) {
 }
 
-void SelectScene::onTouchCancelled(Touch *touch, Event *event) {
+void RigidScene::onTouchCancelled(Touch *touch, Event *event) {
 }
 
-void SelectScene::update(float delta){
+void RigidScene::update(float delta){
     int velocityIterations = 8;
     int positionIteretions = 1;
     world->Step(delta, velocityIterations, positionIteretions);
@@ -89,13 +89,13 @@ void SelectScene::update(float delta){
     world->SetContinuousPhysics(true);
 }
 
-void SelectScene::createPhysWorld() {
+void RigidScene::createPhysWorld() {
     b2Vec2 gravity;
     gravity.Set(0,-10);
     world = new b2World(gravity);
 }
 
-void SelectScene::drawBox2dSpriteAt(SelectScene::Box2dSpriteData data, Point pos) {
+void RigidScene::drawBox2dSpriteAt(RigidScene::Box2dSpriteData data, Point pos) {
     if (data.file == NULL) {
         return;
     }
@@ -128,7 +128,7 @@ void SelectScene::drawBox2dSpriteAt(SelectScene::Box2dSpriteData data, Point pos
     physicsSprite->setPosition(pos);
 }
 
-SelectScene::Box2dSpriteData SelectScene::createRandomBox2DSpriteData() {
+RigidScene::Box2dSpriteData RigidScene::createRandomBox2DSpriteData() {
     SpriteType type;
     float rnd = CCRANDOM_0_1();
     if (rnd < 0.02) {
@@ -143,7 +143,7 @@ SelectScene::Box2dSpriteData SelectScene::createRandomBox2DSpriteData() {
     return createBox2DSpriteData(type);
 }
 
-void SelectScene::createGround() {
+void RigidScene::createGround() {
     Size winSize = Director::getInstance()->getWinSize();
     b2BodyDef groundBodyDef;
     groundBodyDef.position.SetZero();
@@ -169,7 +169,7 @@ void SelectScene::createGround() {
     //groundBody->CreateFixture(&groundBox,0);
 }
 
-SelectScene::Box2dSpriteData SelectScene::createBox2DSpriteData(SpriteType type) {
+RigidScene::Box2dSpriteData RigidScene::createBox2DSpriteData(SpriteType type) {
     Box2dSpriteData sprite;
     if (type == SpriteType::Circle) {
         sprite.file = "circle.png";
